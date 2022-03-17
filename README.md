@@ -1,8 +1,6 @@
-# Basic Sample Hardhat Project
+Basic NFT Swap using Next.js for web application development, Harmony testnet capabilities, hardhat for local network compilation and script based testing as well as ethers for web-to-wallet connections.
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
-
-Try running some of the following tasks:
+Basic Hardhat Shell commands:
 
 ```shell
 npx hardhat accounts
@@ -13,3 +11,6 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
+
+Solidity + EVM: Smart Contract Deployment and Testing
+Using @openzeppelin

@@ -1,5 +1,9 @@
 require("@nomiclabs/hardhat-waffle");
 
+// read
+const fs = require("fs");
+const hmny_priv = fs.readFileSync(".env").toString();
+
 module.exports = {
   networks: {
     hardhat: {
@@ -8,7 +12,7 @@ module.exports = {
     //  unused configuration
     //  testnet: {
     //    url: "https://api.s0.b.hmny.io",
-    //    accounts: [process.env.privateKey]
+    //    accounts: [hmny_priv]
     //  }
   },
   solidity: {
