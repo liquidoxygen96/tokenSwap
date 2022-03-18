@@ -94,7 +94,7 @@ contract NFTMarketplace is ERC721URIStorage {
         );
     }
 
-    // Resell function on MarketPlace
+    //  Resell function: allows owners to resell their purchased NFT on MarketPlace
     function resellToken (uint256 tokenId, uint256 price) public payable {
         require(idToMarketItem[tokenId].owner == msg.sender, "Only Owner can resell this item");
         require(msg.value == listingPrice, "price must equal listing price");
@@ -104,13 +104,32 @@ contract NFTMarketplace is ERC721URIStorage {
         idToMarketItem[tokenId].owner = payable(address(this));
         _itemsSold.decrement();
 
-        //transfer after sale
+        
         _transfer(msg.sender, address(this), tokenId);
     }
 
     // Sale: Transfer Ownership of the 721token along with the funds
+    function createMarketSale (
+        uint256 tokenId
+    ) public payable {
+        uint price = idToMarketItem[tokenId].price;
+        address seller = idToMarketItem[tokenId].seller;
 
-    // Show unsold items
+        require(msg.value == price, "Please submit the asking price to complete the purchase");
+        
+        idToMarketItem[tokenId].owner = payable(msg.sender);
+        idToMarketItem[tokenId].sold = true;
+        idToMarketItem[tokenId].seller = payable(address(0));
+        
+        _itemsSold.increment();
+        _transfer(address(this), msg.sender, tokenId);
+
+        //transfer listing price to new owner
+        payable(owner).transfer(listingPrice);
+        payable(seller).transfer(msg.value);
+    }
+    
+    // return: unsold items
 
     // Show the users purchased NFTs
 
