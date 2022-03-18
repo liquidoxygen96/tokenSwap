@@ -19,7 +19,7 @@ contract NFTMarketplace is ERC721URIStorage {
 
     //fee on harmony can be programmed to be 0.05 $ONE
     uint256 listingPrice = 0.05 ether;
-    address payable owner;
+    address payable owner; 
 
     //Fetch each MarketItem using the tokenId
     mapping(uint256 => MarketItem) private idToMarketItem;
@@ -95,6 +95,18 @@ contract NFTMarketplace is ERC721URIStorage {
     }
 
     // Resell function on MarketPlace
+    function resellToken (uint256 tokenId, uint256 price) public payable {
+        require(idToMarketItem[tokenId].owner == msg.sender, "Only Owner can resell this item");
+        require(msg.value == listingPrice, "price must equal listing price");
+        idToMarketItem[tokenId].sold = false;
+        idToMarketItem[tokenId].price = price;
+        idToMarketItem[tokenId].seller = payable(msg.sender);
+        idToMarketItem[tokenId].owner = payable(address(this));
+        _itemsSold.decrement();
+
+        //transfer after sale
+        _transfer(msg.sender, address(this), tokenId);
+    }
 
     // Sale: Transfer Ownership of the 721token along with the funds
 
