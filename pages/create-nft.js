@@ -42,5 +42,22 @@ export default function createItem() {
       console.log("Error uploading file: ", error);
     }
   }
-  async function uploadToIPFS() {}
+  async function uploadToIPFS() {
+    const { name, description, price } = formInput;
+    if (!name || !description || !price || !fileUrl) return;
+    //upload metadata to IPFS first
+    const data = JSON.stringify({
+      name,
+      description,
+      image: fileUrl,
+    });
+    try {
+      const added = await client.add(data);
+      const url = "https://ipfs.infura.io/ipfs/${added.path}";
+      //return url after metadata has been uploaded to IPFS
+      return url;
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+    }
+  }
 }
