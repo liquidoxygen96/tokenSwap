@@ -133,7 +133,7 @@ contract NFTMarketplace is ERC721URIStorage {
     // return: unsold items
     function fetchMarketItems() public view returns (MarketItem[] memory) {
         uint itemCount = _tokenIds.current();
-        uint unsoldItemCount = _tokens.current() - _itemsSold.current();
+        uint unsoldItemCount = _tokenIds.current() - _itemsSold.current();
         uint currentIndex = 0;
 
         MarketItem[] memory items = new MarketItem[](unsoldItemCount);
@@ -148,7 +148,52 @@ contract NFTMarketplace is ERC721URIStorage {
         return items;
     }
 
-    // Show the users purchased NFTs
 
-    // Show the users LISTED NFTs and return items 
+    // Show the users purchased NFTs
+    function fetchMyNFTs() public view returns (MarketItem[] memory) {
+        uint totalItemCount = _tokenIds.current();
+        uint itemCount =0;
+        uint currentIndex =0;
+
+        for(uint i=0; i < totalItemCount; i++){
+            if (idToMarketItem[i+1].owner == msg.sender) {
+                itemCount += 1;
+            }
+        }
+        MarketItem[] memory items = new MarketItem[](itemCount);
+        for (uint i=0; i < totalItemCount; i++) {
+            if (idToMarketItem[i+1].owner ==msg.sender){
+                uint currentId =i +i;
+            MarketItem storage currentItem = idToMarketItem[currentId];
+          items[currentIndex] = currentItem;
+          currentIndex += 1;
+        }
+      }
+      return items;
+    }
+
+    //show items each user has listed
+    function fetchItemsListed() public view returns (MarketItem[] memory) {
+      uint totalItemCount = _tokenIds.current();
+      uint itemCount = 0;
+      uint currentIndex = 0;
+
+      for (uint i = 0; i < totalItemCount; i++) {
+        if (idToMarketItem[i + 1].seller == msg.sender) {
+          itemCount += 1;
+        }
+      }
+
+      MarketItem[] memory items = new MarketItem[](itemCount);
+      for (uint i = 0; i < totalItemCount; i++) {
+        if (idToMarketItem[i + 1].seller == msg.sender) {
+          uint currentId = i + 1;
+          MarketItem storage currentItem = idToMarketItem[currentId];
+          items[currentIndex] = currentItem;
+          currentIndex += 1;
+        }
+      }
+      return items;
+    }
 }
+       
