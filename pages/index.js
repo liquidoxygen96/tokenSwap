@@ -64,7 +64,7 @@ export default function Home() {
     );
 
     /* Prompt user to accept the listing price for NFT purchase */
-    const price = ethers.utils.parseUnits(nft.price.toStrin(), "ether");
+    const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
     const transaction = await contract.createMarketSale(nft.tokenId, {
       value: price,
     });

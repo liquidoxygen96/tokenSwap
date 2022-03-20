@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
           </Link>
         </div>
       </nav>
-      <component {...pageProps} />
+      <Component {...pageProps} />
     </div>
   );
 }

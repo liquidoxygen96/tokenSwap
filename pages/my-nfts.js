@@ -32,7 +32,7 @@ export default function MyAssets() {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
 
-    const markeplaceContract = new ethers.Contract(
+    const marketplaceContract = new ethers.Contract(
       marketplaceAddress,
       NFTMarketplace.abi,
       signer

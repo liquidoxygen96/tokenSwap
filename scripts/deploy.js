@@ -21,6 +21,7 @@ async function main() {
 
   console.log("nftMarketplace deployed to:", nftMarketplace.address);
 
+  //creates a file named "config.js" which will contain the NFTMarkeplace.sol smart contract address
   fs.writeFileSync(
     "./config.js",
     'export const marketplaceAddress = "${nftMarketplace.address}" '
