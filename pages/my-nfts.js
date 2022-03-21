@@ -11,7 +11,7 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import { useRouter } from "next/router";
 
-import { marketplaceAddress } from "../config";
+import { marketplaceAddress } from "../config.js";
 
 import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
@@ -25,7 +25,7 @@ export default function MyAssets() {
 
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
-      network: "mainnet",
+      network: "testnet",
       cacheProvider: true,
     });
     const connection = await web3Modal.connect();
