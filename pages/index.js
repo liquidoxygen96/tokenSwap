@@ -4,7 +4,7 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 
 /* marketplace address will be created once we run our solidity file on hardhat*/
-import { marketplaceAddress } from "../config.js";
+import { marketplaceAddress } from "../config";
 
 import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
@@ -18,7 +18,7 @@ export default function Home() {
 
   async function loadNFTs() {
     /* create generic provider and query for unsold market items */
-    const provider = new ethers.providers.Web3Provider(web3.currentProvider);
+    const provider = new ethers.getDefaultProvider("testnet");
     const contract = new ethers.Contract(
       marketplaceAddress,
       NFTMarketplace.abi,
