@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div class="dark:bg-slate-900">
+    <div className="dark:bg-slate-900">
       <div>
         <nav className="border-b p-6">
           <p className="text-white text-4xl font-bold">JudoSwap</p>
