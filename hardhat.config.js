@@ -1,18 +1,18 @@
 require("@nomiclabs/hardhat-waffle");
 
 // read
-const fs = require("fs");
-const hmny_priv = fs.readFileSync(".env").toString();
+//const fs = require("fs");
+//const priv = fs.readFileSync(".env").toString();
 
 module.exports = {
   networks: {
     hardhat: {
       chainId: 1337,
     },
-    //  unused configuration
+    //  Rinkeby-ethereum testnet
     testnet: {
-      url: "https://api.s0.b.hmny.io",
-      accounts: [hmny_priv],
+      url: "https://rinkeby.infura.io/v3/${process.env.infura_ipfs_id}",
+      accounts: [priv_dev],
     },
   },
   solidity: {
