@@ -12,7 +12,7 @@ module.exports = {
     //  Rinkeby-ethereum testnet
     testnet: {
       url: "https://rinkeby.infura.io/v3/${process.env.infura_ipfs_id}",
-      accounts: [priv_dev],
+      accounts: [process.env.priv_dev],
     },
   },
   solidity: {
