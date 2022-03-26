@@ -15,7 +15,11 @@ export default function Home() {
   }, []);
   async function loadNFTs() {
     /* create a generic provider and query for unsold market items */
-    const provider = new ethers.providers.JsonRpcProvider("tesntnet");
+    /*
+     * based on ethers.js documentation, either use JsonRpcProvider or the Web3Provider(web3.currentProvider); which will update based on the network config in Metamask
+     * const provider = new ethers.providers.JsonRpcProvider("tesntnet");
+     */
+    const provider = new ethers.providers.Web3Provider(web3.currentProvider);
     const contract = new ethers.Contract(
       marketplaceAddress,
       NFTMarketplace.abi,
