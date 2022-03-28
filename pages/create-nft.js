@@ -1,20 +1,10 @@
-/**
- * Page for creating and listing NFTs
- * main functions of this page:
- * 1.upload and save files to IPFS
- * 2.mint the uploaded file as an NFT and list it for sale
- * 3. set asking price and add metadata to describe the NFT
- * After creating and listing an item for sale: re-route user to main page
- */
-
 import { useState } from "react";
 import { ethers } from "ethers";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useRouter } from "next/router";
 import Web3Modal from "web3modal";
 
-//create server for IPFS upload on infura.io
-const client = ipfsHttpClient("https://ipfs.infura.io:5001");
+const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 import { marketplaceAddress } from "../config";
 
@@ -30,13 +20,12 @@ export default function CreateItem() {
   const router = useRouter();
 
   async function onChange(e) {
-    // upload image to IPFS
     const file = e.target.files[0];
     try {
       const added = await client.add(file, {
-        progress: (prog) => console.log("received: ${prog}"),
+        progress: (prog) => console.log(`received: ${prog}`),
       });
-      const url = "https://ipfs.infura.io/ipfs/${added.path}";
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
       setFileUrl(url);
     } catch (error) {
       console.log("Error uploading file: ", error);
@@ -45,7 +34,7 @@ export default function CreateItem() {
   async function uploadToIPFS() {
     const { name, description, price } = formInput;
     if (!name || !description || !price || !fileUrl) return;
-    //upload metadata to IPFS first
+    /* first, upload to IPFS */
     const data = JSON.stringify({
       name,
       description,
@@ -53,8 +42,8 @@ export default function CreateItem() {
     });
     try {
       const added = await client.add(data);
-      const url = "https://ipfs.infura.io/ipfs/${added.path}";
-      //return url after metadata has been uploaded to IPFS
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      /* after file is uploaded to IPFS, return the URL to use it in the transaction */
       return url;
     } catch (error) {
       console.log("Error uploading file: ", error);
@@ -68,7 +57,7 @@ export default function CreateItem() {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
 
-    //create NFT
+    /* next, create the item */
     const price = ethers.utils.parseUnits(formInput.price, "ether");
     let contract = new ethers.Contract(
       marketplaceAddress,
@@ -84,6 +73,7 @@ export default function CreateItem() {
 
     router.push("/");
   }
+
   return (
     <div className="flex justify-center">
       <div className="w-1/2 flex flex-col pb-12">
@@ -102,7 +92,7 @@ export default function CreateItem() {
           }
         />
         <input
-          placeholder="Asset Price"
+          placeholder="Asset Price in Eth"
           className="mt-2 border rounded p-4"
           onChange={(e) =>
             updateFormInput({ ...formInput, price: e.target.value })
@@ -114,7 +104,7 @@ export default function CreateItem() {
           onClick={listNFTForSale}
           className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
         >
-          Mint NFT
+          Create NFT
         </button>
       </div>
     </div>
