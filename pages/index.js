@@ -7,19 +7,21 @@ import { marketplaceAddress } from "../config";
 
 import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
+//const fs = require("fs")
+//const infura_rinkeby_id = fs.readFileSync([process.env.INFURA_RINKEBY_ID]).toString().trim() || "";
 export default function Home() {
   const [nfts, setNfts] = useState([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
   useEffect(() => {
     loadNFTs();
   }, []);
+
   async function loadNFTs() {
     /* create a generic provider and query for unsold market items */
-    /*
-     * based on ethers.js documentation, either use JsonRpcProvider or the Web3Provider(web3.currentProvider); which will update based on the network config in Metamask
-     * const provider = new ethers.providers.JsonRpcProvider("tesntnet");
-     */
-    const provider = new ethers.providers.Web3Provider(web3.currentProvider);
+    const provider = new ethers.providers.InfuraProvider([
+      (network = "rinkeby"),
+      [process.env.INFURA_RINKEBY_ID],
+    ]);
     const contract = new ethers.Contract(
       marketplaceAddress,
       NFTMarketplace.abi,
