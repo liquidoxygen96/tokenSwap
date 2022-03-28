@@ -3,8 +3,9 @@ require("@nomiclabs/hardhat-waffle");
 // read
 const fs = require("fs");
 //const priv_dev = fs.readFileSync(".env").toString().trim();
-const infura_rinkeby_id =
-  fs.readFileSync([process.env.INFURA_RINKEBY_ID].toString().trim() || "";
+const infura_rinkeby_id = fs.readFileSync(
+  [process.env.INFURA_RINKEBY_ID].toString().trim() || ""
+);
 
 module.exports = {
   //defaultNetwork: "testnet",
