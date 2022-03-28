@@ -26,6 +26,7 @@
     "ethereum-waffle": "^3.2.0",
     "ethers": "^5.6.1",
     "hardhat": "^2.9.1",
+    "hardhat-typechain": "^0.3.5",
     "ipfs-http-client": "^56.0.1",
     "next": "12.1.0",
     "postcss": "^8.4.12",
@@ -33,6 +34,9 @@
     "react-dom": "17.0.2",
     "react-is": "^17.0.2",
     "solc": "^0.8.13",
+    "ts-generator": "^0.1.1",
+    "ts-node": "^10.7.0",
+    "typechain": "^8.0.0",
     "typescript": "^4.6.3",
     "web3modal": "^1.9.5"
   },
