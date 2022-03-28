@@ -1,11 +1,12 @@
-//list an owned NFT for sale
-import { ethers } from "ethers";
 import { useEffect, useState } from "react";
+import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Web3Modal from "web3modal";
+
 import { marketplaceAddress } from "../config";
-import { NFTMarketplace } from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
+
+import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
 export default function ResellNFT() {
   const [formInput, updateFormInput] = useState({ price: "", image: "" });
@@ -18,10 +19,11 @@ export default function ResellNFT() {
   }, [id]);
 
   async function fetchNFT() {
-    if (!tokenURI) return fetchNFT;
+    if (!tokenURI) return;
     const meta = await axios.get(tokenURI);
     updateFormInput((state) => ({ ...state, image: meta.data.image }));
   }
+
   async function listNFTForSale() {
     if (!price) return;
     const web3Modal = new Web3Modal();
@@ -45,11 +47,12 @@ export default function ResellNFT() {
 
     router.push("/");
   }
+
   return (
     <div className="flex justify-center">
       <div className="w-1/2 flex flex-col pb-12">
         <input
-          placeholder="Asset price in ETH/ONE"
+          placeholder="Asset Price in Eth"
           className="mt-2 border rounded p-4"
           onChange={(e) =>
             updateFormInput({ ...formInput, price: e.target.value })
@@ -60,7 +63,7 @@ export default function ResellNFT() {
           onClick={listNFTForSale}
           className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
         >
-          List NFT for Sale
+          List NFT
         </button>
       </div>
     </div>
