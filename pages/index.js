@@ -7,8 +7,10 @@ import { marketplaceAddress } from "../config";
 
 import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
-//const fs = require("fs")
-//const infura_rinkeby_id = fs.readFileSync([process.env.INFURA_RINKEBY_ID]).toString().trim() || "";
+const dotenv = require("dotenv");
+dotenv.config({ path: __dirname + "/.env" });
+const INFURA_ID = process.env.INFURA_ID;
+
 export default function Home() {
   const [nfts, setNfts] = useState([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
@@ -20,7 +22,7 @@ export default function Home() {
     /* create a generic provider and query for unsold market items */
     const provider = new ethers.providers.InfuraProvider([
       (network = "rinkeby"),
-      [process.env.INFURA_RINKEBY_ID],
+      [`${INFURA_ID}`],
     ]);
     const contract = new ethers.Contract(
       marketplaceAddress,
