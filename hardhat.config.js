@@ -1,24 +1,26 @@
 require("@nomiclabs/hardhat-waffle");
-//require("dotenv").config();
-// read
-const fs = require("fs");
-//const priv_dev = fs.readFileSync(".env").toString().trim();
-const infura_rinkeby_id = fs.readFileSync(
-  [process.env.INFURA_RINKEBY_ID].toString().trim() || ""
-);
+
+//enable variable read from .env file using the dotenv library
+const dotenv = require("dotenv");
+dotenv.config({ path: __dirname + "/.env" });
+const { PRIVATE_KEY, INFURA_ID } = process.env;
+
+//console.log(INFURA_ID);
+
+// read-file method 2:
+//const fs = require("fs");
+//const infura_rinkeby_id = fs.readFileSync(".env").toString();
 
 module.exports = {
-  //defaultNetwork: "testnet",
-
   networks: {
+    //hardhat local node: run using npx hardhat run script/deploy.js --network local host
     hardhat: {
       chainId: 1337,
     },
-
-    //  Rinkeby-ethereum testnet
+    //  Rinkeby testnet + infura_rinkeby_id
     testnet: {
-      url: "https://rinkeby.infura.io/v3/${infura_rinkeby_id}",
-      accounts: [process.env.PRIVATE_KEY],
+      url: "https://rinkeby.infura.io/v3/`${INFURA_ID}`",
+      accounts: [`${PRIVATE_KEY}`],
     },
   },
   solidity: {
