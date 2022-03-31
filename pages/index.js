@@ -7,9 +7,9 @@ import { marketplaceAddress } from "../config";
 
 import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
-const dotenv = require("dotenv");
-dotenv.config({ path: __dirname + "/.env" });
-const INFURA_ID = process.env.INFURA_ID;
+//const dotenv = require("dotenv");
+//dotenv.config({ path: __dirname + "/.env" });
+//const INFURA_ID = process.env.INFURA_ID;
 
 export default function Home() {
   const [nfts, setNfts] = useState([]);
@@ -20,10 +20,15 @@ export default function Home() {
 
   async function loadNFTs() {
     /* create a generic provider and query for unsold market items */
-    const provider = new ethers.providers.InfuraProvider([
-      (network = "rinkeby"),
-      [`${INFURA_ID}`],
-    ]);
+    // const provider = new ethers.providers.InfuraProvider([
+    //  (network = "rinkeby"),
+    // [`${INFURA_ID}`],
+    //]);
+
+    //method 2: JsonRpcProvider
+    const provider = new ethers.providers.JsonRpcProvider(
+      "https://speedy-nodes-nyc.moralis.io/91a1c9977ce8f9a4f182dfc1/eth/rinkeby"
+    );
     const contract = new ethers.Contract(
       marketplaceAddress,
       NFTMarketplace.abi,
@@ -84,7 +89,7 @@ export default function Home() {
           {nfts.map((nft, i) => (
             <div key={i} className="border shadow rounded-xl overflow-hidden">
               <img src={nft.image} />
-              <div className="p-4">
+              <div className=" text-white p-4">
                 <p
                   style={{ height: "64px" }}
                   className="text-2xl font-semibold"
