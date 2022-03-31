@@ -5,8 +5,6 @@ const dotenv = require("dotenv");
 dotenv.config({ path: __dirname + "/.env" });
 const { PRIVATE_KEY, INFURA_ID } = process.env;
 
-//console.log(INFURA_ID);
-
 // read-file method 2:
 //const fs = require("fs");
 //const infura_rinkeby_id = fs.readFileSync(".env").toString();
@@ -19,7 +17,8 @@ module.exports = {
     },
     //  Rinkeby testnet + infura_rinkeby_id
     testnet: {
-      url: "https://rinkeby.infura.io/v3/`${INFURA_ID}`",
+      //change url, add variable to .env when you set-up your own rpc node: moralis is great
+      url: "https://speedy-nodes-nyc.moralis.io/91a1c9977ce8f9a4f182dfc1/eth/rinkeby",
       accounts: [`${PRIVATE_KEY}`],
     },
   },
